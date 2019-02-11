@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>个人注册</title>
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/page-account.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+
+<body>
+    <div class="register py-container ">
+        <!--head-->
+        <div class="logoArea">
+            <a href="home.html" class="logo"></a>
+        </div>
+        <!--register-->
+        <div class="registerArea">
+            <h3>注册新用户<span class="go">我有账号，去<a href="login.html">登陆</a></span></h3>
+            <div class="info">
+                <form class="sui-form form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">用户名：</label>
+                        <div class="controls">
+                            <input type="text" class="input-xfat input-xlarge" placeholder="用户名" id='userName'>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">邮箱：</label>
+                        <div class="controls">
+                            <input type="text" class="input-xfat input-xlarge" placeholder="邮箱" id="emil">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">登录密码：</label>
+                        <div class="controls">
+                            <input type="password" class="input-xfat input-xlarge" placeholder="设置登录密码" id="pwd">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">确认密码：</label>
+                        <div class="controls">
+                            <input type="password" class="input-xfat input-xlarge" placeholder="再次确认密码" id="cfpwd">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-label">&nbsp;</span>
+                        <label class="controls">
+              <input id="agree" name="m1" type="checkbox" checked>
+              <span>同意协议并注册《品优购用户协议》</span>
+            </label>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-label"></span>
+                        <div class="controls btn-reg">
+                            <button id="registerBtn" class="sui-btn btn-block btn-xlarge btn-danger" href=" ">完成注册</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!--foot-->
+        <div class="py-container copyright">
+            <ul>
+                <li><a href="#">关于我们</a></li>
+                <li><a href="#">联系我们</a></li>
+                <li><a href="#">联系客服</a></li>
+                <li><a href="#">商家入驻</a></li>
+                <li><a href="#">营销中心</a></li>
+                <li><a href="#">手机品优购</a></li>
+                <li><a href="#">销售联盟</a></li>
+                <li><a href="#">品优购社区</a></li>
+                <li><a href="#">品优购公益</a></li>
+                <li><a href="#">English Site</a></li>
+                <li><a href="#">Contact U</a></li>
+            </ul>
+            <div class="address">地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096 电话：400-618-4000 传真：010-82935100</div>
+            <div class="beian">京ICP备08001421号京公网安备110108007702</div>
+        </div>
+    </div>
+</body>
+
+<script src="./lib/jquery-1.12.4.js"></script>
+<script src="./scripts/register.js"></script>
+<script>
+    let sum = 0;
+
+    function test (selector,reg) {
+        // 验证用户
+       $(selector).blur(function () {
+        //    获取文本内容
+        const str = $(this).val();
+        // 检验
+        const isOk = reg.test(str);
+        // 判断
+        if(isOk) {
+            $(this).next().text('√').css({
+                color:'green',
+                fontSize:'14px'
+            })
+            sum++;
+        }else {
+            $(this).next().text('格式错误！').css({
+                color:'red'
+            })
+            sum -- ;
+            if(sum<0) {
+                sum = 0;
+            }
+        }
+        isok();
+       })
+    }
+
+    test('#emil',/^\w{5,11}@\w{2,6}\.com$/);
+    test('#userName',/\w{3,12}/);
+
+    $('#pwd').blur(function () {
+        if($(this).val()=='') {
+            $(this).next().text('格式错误！').css({
+                color:'red'
+            })
+            $('#cfpwd').next().text('与密码不相符').css({
+                color:'red'
+            })
+            $('#cfpwd').val('');
+            sum -- ;
+            if(sum<0) {
+                sum = 0;
+            }
+        }
+        else {
+            $(this).next().text('√').css({
+                color:'green',
+                fontSize:'14px'
+            })
+        }
+        isok();
+    }) 
+    
+    $('#cfpwd').blur(function () {
+        if($(this).val() == $('#pwd').val()&& $('#pwd').val()!='') {
+            $(this).next().text('√').css({
+                color:'green',
+                fontSize:'14px'
+            })
+            sum++;
+        }else {
+            $(this).next().text('与密码不相符').css({
+                color:'red'
+            })
+            sum -- ;
+            if(sum<0) {
+                sum = 0;
+            }
+        }
+        isok();
+        console.log(sum);
+    })
+
+    $('#agree').click(function() {
+        if($(this).prop('checked')) {
+           sum ++;
+        }else {
+            sum -- ;
+            if(sum<0) {
+                sum = 0;
+            }
+        }
+        isok();
+        console.log(sum);
+    })
+
+
+    isok();
+   function isok () {
+       if(sum == 3&& $('#agree').prop('checked')) {
+        $('#registerBtn').removeClass('ban')
+       }
+       else {
+        $('#registerBtn').addClass('ban')
+       }
+   }
+   console.log($('#agree').prop('checked'));
+   
+</script>
+
+</html>
