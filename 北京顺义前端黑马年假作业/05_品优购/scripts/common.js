@@ -97,7 +97,7 @@
         function autoPlay() {
         timer = setInterval(function(){
             $('#btn-r').click();
-        }, 2000)
+        }, 3000)
         }
         autoPlay();
 

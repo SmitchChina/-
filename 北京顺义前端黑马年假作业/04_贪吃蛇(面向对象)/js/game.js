@@ -40,7 +40,7 @@ Game.prototype.start = function () {
       that.snake.insertNewHead();
      
     }
-  }, 50);
+  }, 300);
 
   // 键盘控制蛇移动
   $(document).keydown(function (e) {
